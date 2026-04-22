@@ -4,33 +4,20 @@ from django.shortcuts import render, redirect
 
 
 
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
-from django.contrib.auth.models import User
+from .models import Post
+from .forms import PostForm
 
 # Create your views here.
 
-def list(request):
-    pass
+def posts_list(request):
+    posts = Post.objects.all()
+    return render(request, 'posts/posts_list.html', {'posts': posts})
 
 def post_new(request):
-    pass
-
-def home(request):
-    context = {
-        "LoginForm": AuthenticationForm(),
-        "RegForm": UserCreationForm()
-    }
-    return render(request, 'posts/home.html', context)
-
-def register(request):
     if request.method == "POST":
-        form = UserCreationForm(request.POST)
+        form = PostForm(request, request.FILES)
         if form.is_valid():
-            login(request, form.save())
-            return redirect('posts:list')
+            pass
     else:
-        form = UserCreationForm()
-    return render(request, 'posts/home.html', {'form': form})
-
-def login(request):
-    pass
+        form = PostForm()
+    return render(request, '', {'form': form})

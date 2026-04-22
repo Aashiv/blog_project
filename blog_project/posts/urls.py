@@ -11,6 +11,6 @@ from . import views
 app_name = "posts" 
 
 urlpatterns = [
-    path('', views.list, name="list"),
-    path('new', views.post_new, name="post-new"),
+    path('', views.posts_list, name="list"),
+    path('new-post/', views.post_new, name="new-post"),
 ]
