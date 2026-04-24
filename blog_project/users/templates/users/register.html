@@ -27,6 +27,8 @@
           <div class="col-lg-6 d-flex align-items-center justify-content-center">
             <div class="auth-form-transparent text-left p-3">
               <h4>Registration</h4>
+              <ul style="display:none; color:red; border:1px solid red; font-size:12px;" id="myList"></ul>
+              <br>
               <form id="registrationForm" class="pt-3" method="POST" action="{% url 'users:register' %}">
                 {% csrf_token %}
                 <div class="form-group">
@@ -44,7 +46,7 @@
                     <div class="input-group-prepend bg-transparent">
                       
                     </div>
-                    <input type="email" class="form-control form-control-lg " name="user_email" placeholder="Email">
+                    <input type="email" class="form-control form-control-lg " name="email" placeholder="Email">
                   </div>
                 </div>
                 <div class="form-group">
@@ -53,7 +55,7 @@
                     <div class="input-group-prepend bg-transparent">
                       
                     </div>
-                    <input type="password" class="form-control form-control-lg " name="user_password" id="exampleInputPassword" placeholder="Password">                        
+                    <input type="password" class="form-control form-control-lg " name="password" id="exampleInputPassword" placeholder="Password">                        
                   </div>
                 </div>
                 <div class="form-group">
@@ -106,7 +108,7 @@
   <!-- inject:js -->
   <script src="{% static 'js/off-canvas.js' %}"></script>
   <script src="{% static 'js/hoverable-collapse.js' %}"></script>
-  <script src="{% static 'js/template.js' %}"></script>
+  {% comment %} <script src="{% static 'js/template.js' %}"></script> {% endcomment %}
   <!-- endinject -->
 
   <script>
@@ -129,11 +131,11 @@
                     required: true, 
                     minlength: 3 
                 },
-                user_email:{
+                email:{
                     required: true, 
                     emailPass: true
                 },
-                user_password: { 
+                password: { 
                     required: true,
                     minlength: 6,
                 },
@@ -147,11 +149,11 @@
                   required: "Please enter your name",
                   minlength: "Name should be atleast 3 letters",
                 },
-                user_email: {
+                email: {
                   required: "Please enter email address",
                   emailPass: "Please enter valid email address",
                 },
-                user_password: {
+                password: {
                   required: "Please enter password",
                   minlength: "Password should be atleast 6 digits",
                 },
@@ -161,22 +163,49 @@
                 },
             },
             submitHandler: function(form) {
+              var form = document.getElementById('registrationForm');
+              var formData = new FormData(form);
 //                console.log(form);
 //                return false;
                 // This part only runs if the form passes all rules
-                $.ajax({
-                    url: form.action,
-                    type: 'POST',
-                    data: $(form).serialize(),
-                    success: function(response) {
-                        console.log(response);                      
-                        return false;
-                    }
-                });
-                return false; // Prevents the browser from doing a traditional POST
+              $.ajax({
+                url: form.action,
+                type: 'POST',
+                data: {
+                  'csrfmiddlewaretoken': formData.get('csrfmiddlewaretoken'),
+                  'username': formData.get('username'),
+                  'email': formData.get('email'),
+                  'password1': formData.get('password'),
+                  'password2': formData.get('confirm_password'),
+                },
+                success: function(response) {
+                  console.log('s');
+                  var obj = response.responseText;
+                  alert(obj.message);
+                },
+                error: function(response) {
+                  //document.getElementById("myList").style.display="block";
+                  console.log('e');
+                }
+              });
+              return false; // Prevents the browser from doing a traditional POST
             }
         });
     });
+/*
+    const a = [
+        {name: 'Saritha', sub: 'Maths'},
+        {name: 'Sarthak', sub: 'Science'},
+        {name: 'Sneha', sub: 'Social'}
+    ]
+
+    a.forEach(teacher => {
+        for (let value in teacher) {
+          console.log(value);
+            console.log(`${teacher[value]}`)
+        }
+    })
+*/        
   </script>
 </body>
 

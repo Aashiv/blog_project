@@ -9,16 +9,15 @@ from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib.auth.models import User
 from django.contrib.auth import login, logout
 from django.http import JsonResponse
-from .forms import CustomUserCreationForm
 
 # Create your views here.
 def register_view(request):
-    form = CustomUserCreationForm()
+    form = UserCreationForm()
     if request.method == "POST":
-        form = CustomUserCreationForm(request.POST)
+        form = UserCreationForm(request.POST)
         if form.is_valid():
             user = form.save()
-            login(request, user)            
+            login(request, user)
             return JsonResponse({"success": True, "message": "User created successfully!"}, status=200)
         else:
             # Send form errors back as JSON
