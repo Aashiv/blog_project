@@ -1,212 +1,295 @@
 {% load static %}
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+    <title>Majestic Admin</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href="{% static 'vendors/mdi/css/materialdesignicons.min.css' %}"/>
+    <link rel="stylesheet" href="{% static 'vendors/base/vendor.bundle.base.css' %}"/>
+    <!-- endinject -->
+    <!-- plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+    <!-- endinject -->
+    <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" />
+    <style>
+      #myList li {
+        line-height: 1.5;
+      }
+      #myList {
+        list-style-type: None;
+        display: none;
+        border: 1px solid #de0a26;
+        color: #000000;
+        border-radius: 10px;
+        background-color: #ffcbd1;
+        font-size: 10px;
+      }
 
-<head>
-  <!-- Required meta tags -->
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>Majestic Admin</title>
-  <!-- plugins:css -->
-  <link rel="stylesheet" href="{% static 'vendors/mdi/css/materialdesignicons.min.css' %}">
-  <link rel="stylesheet" href="{% static 'vendors/base/vendor.bundle.base.css' %}">
-  <!-- endinject -->
-  <!-- plugin css for this page -->
-  <!-- End plugin css for this page -->
-  <!-- inject:css -->
-  <link rel="stylesheet" href="{% static 'css/style.css' %}">
-  <!-- endinject -->
-  <link rel="shortcut icon" href="{% static 'images/favicon.png' %}" />
-</head>
+      #myList2 li {
+        line-height: 1.5;
+      }
+      #myList2 {
+        list-style-type: None;
+        display: none;
+        border: 1px solid #0b6623;
+        color: #000000;
+        border-radius: 10px;
+        background-color: #98fb98;
+        font-size: 10px;
+      }
+    </style>
+  </head>
 
-<body>
-  <div class="container-scroller">
-    <div class="container-fluid page-body-wrapper full-page-wrapper">
-      <div class="content-wrapper d-flex align-items-stretch auth auth-img-bg">
-        <div class="row flex-grow">
-          <div class="col-lg-6 d-flex align-items-center justify-content-center">
-            <div class="auth-form-transparent text-left p-3">
-              <h4>Registration</h4>
-              <ul style="display:none; color:red; border:1px solid red; font-size:12px;" id="myList"></ul>
-              <br>
-              <form id="registrationForm" class="pt-3" method="POST" action="{% url 'users:register' %}">
-                {% csrf_token %}
-                <div class="form-group">
-                  <label>Name</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend bg-transparent">
-                      
+  <body>
+    <div class="container-scroller">
+      <div class="container-fluid page-body-wrapper full-page-wrapper">
+        <div class="content-wrapper d-flex align-items-stretch auth auth-img-bg">
+          <div class="row flex-grow">
+            <div class="col-lg-6 d-flex align-items-center justify-content-center">
+              <div class="auth-form-transparent text-left p-3">
+                <h4>Registration</h4>
+                <ul id="myList"></ul>
+                <ul id="myList2"></ul>
+                <br />
+                <form id="registrationForm" name="registrationForm" class="pt-3" method="POST" action="{% url 'users:register' %}">
+                  {% csrf_token %}
+                  <div class="form-group">
+                    <label>Name</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend bg-transparent"></div>
+                      <input type="text" class="form-control form-control-lg" name="username" placeholder="Username"/>
                     </div>
-                    <input type="text" class="form-control form-control-lg " name="username" placeholder="Username">
                   </div>
-                </div>
-                <div class="form-group">
-                  <label>Email</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend bg-transparent">
-                      
+                  <div class="form-group">
+                    <label>Email</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend bg-transparent"></div>
+                      <input type="email" class="form-control form-control-lg" name="email" placeholder="Email"/>
                     </div>
-                    <input type="email" class="form-control form-control-lg " name="email" placeholder="Email">
                   </div>
-                </div>
-                <div class="form-group">
-                  <label>Password</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend bg-transparent">
-                      
+                  <div class="form-group">
+                    <label>Password</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend bg-transparent"></div>
+                      <input type="password" class="form-control form-control-lg" name="password" id="exampleInputPassword" placeholder="Password"/>
                     </div>
-                    <input type="password" class="form-control form-control-lg " name="password" id="exampleInputPassword" placeholder="Password">                        
                   </div>
-                </div>
-                <div class="form-group">
-                  <label>Re-enter Password</label>
-                  <div class="input-group">
-                    <div class="input-group-prepend bg-transparent">
-                      
+                  <div class="form-group">
+                    <label>Re-enter Password</label>
+                    <div class="input-group">
+                      <div class="input-group-prepend bg-transparent"></div>
+                      <input type="password" class="form-control form-control-lg" name="confirm_password" placeholder="Password"/>
                     </div>
-                    <input type="password" class="form-control form-control-lg" name="confirm_password" placeholder="Password">                        
                   </div>
-                </div>
-                <div class="mb-4">
-                  <button type="submit" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">SUBMIT</button>
-                </div>
-                <div class="text-center mt-4 font-weight-light">
-                  Already have an account? <a href="{% url 'users:login' %}" class="text-primary">Login</a>
-                </div>
-              </form>
+                  <div class="mb-4">
+                    <button type="submit" id="sb-btn" class="btn btn-block btn-primary btn-lg font-weight-medium auth-form-btn">
+                      SUBMIT
+                    </button>
+                  </div>
+                  <div class="text-center mt-4 font-weight-light">
+                    Already have an account?
+                    <a href="{% url 'users:login' %}" class="text-primary">Login</a>
+                  </div>
+                </form>
+              </div>
+            </div>
+            <div class="col-lg-6 register-half-bg d-flex flex-row">
+              <p class="text-white font-weight-medium text-center flex-grow align-self-end">
+                Copyright &copy; 2020 All rights reserved.
+              </p>
             </div>
           </div>
-          <div class="col-lg-6 register-half-bg d-flex flex-row">
-            <p class="text-white font-weight-medium text-center flex-grow align-self-end">Copyright &copy; 2020  All rights reserved.</p>
-          </div>
         </div>
+        <!-- content-wrapper ends -->
       </div>
-      <!-- content-wrapper ends -->
+      <!-- page-body-wrapper ends -->
     </div>
-    <!-- page-body-wrapper ends -->
-  </div>
-  <!-- container-scroller -->
+    <!-- container-scroller -->
 
-  <!-- Optional JavaScript; choose one of the two! -->
-  <script src="{% static 'dist/js/jquery-4.0.0.min.js' %}"></script>
-  
-  <!-- Option 1: Bootstrap Bundle with Popper -->
-  <script src="{% static 'dist/js/bootstrap.bundle.min.js' %}"></script>
+    <!-- Optional JavaScript; choose one of the two! -->
+    <script src="{% static 'dist/js/jquery-4.0.0.min.js' %}"></script>
 
-  <!-- Option 2: Separate Popper and Bootstrap JS -->
-  <!--
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="{% static 'dist/js/bootstrap.bundle.min.js' %}"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
   <script src="{% static 'dist/umd/popper.min.js' %}"></script>
   <script src="{% static 'dist/js/bootstrap.min.js' %}"></script>
   -->
-      
-  <script src="{% static 'dist/js/jquery.validate.min.js' %}"></script>
-  <script src="{% static 'dist/js/additional-methods.min.js' %}"></script>
 
-  <!-- plugins:js -->
-  {% comment %} <script src="{% static 'vendors/base/vendor.bundle.base.js' %}"></script> {% endcomment %}
-  <!-- endinject -->
-  <!-- inject:js -->
-  <script src="{% static 'js/off-canvas.js' %}"></script>
-  <script src="{% static 'js/hoverable-collapse.js' %}"></script>
-  {% comment %} <script src="{% static 'js/template.js' %}"></script> {% endcomment %}
-  <!-- endinject -->
+    <script src="{% static 'dist/js/jquery.validate.min.js' %}"></script>
+    <script src="{% static 'dist/js/additional-methods.min.js' %}"></script>
 
-  <script>
-    $(document).ready(function(){      
-        $.validator.addMethod("emailPass", function(value, element) {
+    <!-- plugins:js -->
+    {% comment %}
+    <script src="{% static 'vendors/base/vendor.bundle.base.js' %}"></script>
+    {% endcomment %}
+    <!-- endinject -->
+    <!-- inject:js -->
+    <script src="{% static 'js/off-canvas.js' %}"></script>
+    <script src="{% static 'js/hoverable-collapse.js' %}"></script>
+    {% comment %}
+    <script src="{% static 'js/template.js' %}"></script>
+    {% endcomment %}
+    <!-- endinject -->
+
+    <script>
+      function myFunction(str) {
+        var x = document.createElement("LI");
+        var t = document.createTextNode(str);
+        x.appendChild(t);
+        document.getElementById("myList").appendChild(x);
+        document.getElementById("myList").style.display = "block";
+      }
+
+      function myFunction2(str) {
+        var x = document.createElement("LI");
+        var t = document.createTextNode(str);
+        x.appendChild(t);
+        document.getElementById("myList2").appendChild(x);
+        document.getElementById("myList2").style.display = "block";
+      }
+
+      $(document).ready(function () {
+        $("myList1").css("display", "none");
+        $("myList2").css("display", "none");
+
+        $.validator.addMethod("emailPass", function (value, element) {
           // This regex checks for: [text] @ [text] . [2+ letters]
           const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
           return emailRegex.test(value);
         });
-        $('#registrationForm').validate({
-            errorPlacement: function(error, element) {
-                // 'error' is the label/element containing the message
-                // 'element' is the input field that failed validation
-                error.insertAfter(element.parent()); 
+        $("#registrationForm").validate({
+          errorPlacement: function (error, element) {
+            // 'error' is the label/element containing the message
+            // 'element' is the input field that failed validation
+            error.insertAfter(element.parent());
+          },
+          errorElement: "p", // Now error messages wrap to the next line
+          errorClass: "text-danger", // Adds custom CSS classes to the error element
+          rules: {
+            username: {
+              required: true,
+              minlength: 3,
             },
-            errorElement: "p", // Now error messages wrap to the next line
-            errorClass: "text-danger", // Adds custom CSS classes to the error element          
-            rules: {
-                username: { 
-                    required: true, 
-                    minlength: 3 
-                },
-                email:{
-                    required: true, 
-                    emailPass: true
-                },
-                password: { 
-                    required: true,
-                    minlength: 6,
-                },
-                confirm_password: { 
-                    required: true,
-                    equalTo: "#exampleInputPassword"
-                }                
+            email: {
+              required: true,
+              emailPass: true,
             },
-            messages: {
-                username: {
-                  required: "Please enter your name",
-                  minlength: "Name should be atleast 3 letters",
-                },
-                email: {
-                  required: "Please enter email address",
-                  emailPass: "Please enter valid email address",
-                },
-                password: {
-                  required: "Please enter password",
-                  minlength: "Password should be atleast 6 digits",
-                },
-                confirm_password: {
-                  required: "Please re-enter password",
-                  equalTo: "Password do not match!"
-                },
+            password: {
+              required: true,
+              minlength: 6,
             },
-            submitHandler: function(form) {
-              var form = document.getElementById('registrationForm');
-              var formData = new FormData(form);
-//                console.log(form);
-//                return false;
-                // This part only runs if the form passes all rules
-              $.ajax({
-                url: form.action,
-                type: 'POST',
-                data: {
-                  'csrfmiddlewaretoken': formData.get('csrfmiddlewaretoken'),
-                  'username': formData.get('username'),
-                  'email': formData.get('email'),
-                  'password1': formData.get('password'),
-                  'password2': formData.get('confirm_password'),
-                },
-                success: function(response) {
-                  console.log('s');
-                  var obj = response.responseText;
-                  alert(obj.message);
-                },
-                error: function(response) {
-                  //document.getElementById("myList").style.display="block";
-                  console.log('e');
+            confirm_password: {
+              required: true,
+              equalTo: "#exampleInputPassword",
+            },
+          },
+          messages: {
+            username: {
+              required: "Please enter your name",
+              minlength: "Name should be atleast 3 letters",
+            },
+            email: {
+              required: "Please enter email address",
+              emailPass: "Please enter valid email address",
+            },
+            password: {
+              required: "Please enter password",
+              minlength: "Password should be atleast 6 digits",
+            },
+            confirm_password: {
+              required: "Please re-enter password",
+              equalTo: "Password do not match!",
+            },
+          },
+          submitHandler: function (form) {
+            $("#sb-btn").prop("disabled", true);
+            $("#myList").css("display", "none");
+            $("#myList").empty();
+            $("#myList2").css("display", "none");
+            $("#myList2").empty();
+
+            var form = document.getElementById("registrationForm");
+            var formData = new FormData(form);
+
+            // This part only runs if the form passes all rules
+            $.ajax({
+              url: form.action,
+              type: "POST",
+              dataType: "json",
+              data: {
+                csrfmiddlewaretoken: formData.get("csrfmiddlewaretoken"),
+                username: formData.get("username"),
+                email: formData.get("email"),
+                password1: formData.get("password"),
+                password2: formData.get("confirm_password"),
+              },
+              success: function (data, status, xhr) {
+                console.log("s");
+                console.log(data);
+                const response = data;
+                if (response.success == true) {
+                  if (response.message) {
+                    $("#sb-btn").prop("disabled", true);
+                  }
+                  if (response.message.url) {
+                    alert(response.message.body);
+                    window.location.href = response.message.url;
+                  }
+                } else {
+                  console.log("something went wrong.");
                 }
-              });
-              return false; // Prevents the browser from doing a traditional POST
-            }
+              },
+              error: function (data, status, xhr) {
+                document.getElementById("myList").style.display = "block";
+                const response = JSON.parse(data.responseText);
+                if (!response.success) {
+                  if (response.errors.email) {
+                    // Username errors
+                    myFunction("Email:");
+                    response.errors.email.forEach((err) => {
+                      myFunction(err.message);
+                    });
+                  }
+
+                  if (response.errors.username) {
+                    // Username errors
+                    myFunction("User Name:");
+                    response.errors.username.forEach((err) => {
+                      myFunction(err.message);
+                    });
+                  }
+
+                  if (response.errors.password) {
+                    // Password2 errors
+                    myFunction("Password:");
+                    response.errors.password.forEach((err) => {
+                      myFunction(err.message);
+                    });
+                  }
+
+                  if (response.errors.password2) {
+                    // Password2 errors
+                    myFunction("Password :");
+                    response.errors.password2.forEach((err) => {
+                      myFunction(err.message);
+                    });
+                  }
+                }
+                $("#sb-btn").prop("disabled", false);
+              },
+            });
+            return false; // Prevents the browser from doing a traditional POST
+          },
         });
-    });
-/*
-    const a = [
-        {name: 'Saritha', sub: 'Maths'},
-        {name: 'Sarthak', sub: 'Science'},
-        {name: 'Sneha', sub: 'Social'}
-    ]
-
-    a.forEach(teacher => {
-        for (let value in teacher) {
-          console.log(value);
-            console.log(`${teacher[value]}`)
-        }
-    })
-*/        
-  </script>
-</body>
-
+      });
+    </script>
+  </body>
 </html>
